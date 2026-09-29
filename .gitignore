@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# User requested ignore
+stitch_palc_dubai_plots_lands_zameen_design_pattern/
+Plots & Lands Company.pdf
