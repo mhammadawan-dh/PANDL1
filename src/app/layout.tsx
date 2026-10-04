@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { Preloader } from "@/components/preloader";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const jakarta = Plus_Jakarta_Sans({
@@ -28,6 +27,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { PageTransition } from "@/components/page-transition";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,15 +38,16 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${playfair.variable} ${jakarta.variable} antialiased`}
+      className={`${cormorant.variable} ${jakarta.variable} antialiased selection:bg-[#D3D4D8]/30 selection:text-[#F2F2F2]`}
     >
       <body
         suppressHydrationWarning
-        className="min-h-screen flex flex-col bg-[#fafbfc] text-[#121417] overflow-x-hidden"
+        className="min-h-[100dvh] flex flex-col bg-midnight text-text-primary overflow-x-hidden"
       >
-        <Preloader />
         <Navbar />
-        <main className="flex-1 w-full">{children}</main>
+        <main className="flex-1 w-full flex flex-col relative overflow-hidden">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
       </body>
     </html>

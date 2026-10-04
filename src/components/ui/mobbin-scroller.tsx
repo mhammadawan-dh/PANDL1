@@ -85,7 +85,7 @@ export function MobbinScroller({
       {showArrows && canScrollLeft && (
         <button
           onClick={() => scrollByAmount(-380)}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/95 border border-gray-200 shadow-md flex items-center justify-center text-gray-700 hover:text-[#b8441c] hover:scale-105 active:scale-95 transition-all"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-midnight-surface border border-white/10 shadow-xl flex items-center justify-center text-text-primary hover:text-platinum hover:bg-white/5 active:scale-95 transition-all"
           aria-label="Scroll left"
         >
           <ChevronLeft className="w-5 h-5" />
@@ -96,7 +96,7 @@ export function MobbinScroller({
       {showArrows && canScrollRight && (
         <button
           onClick={() => scrollByAmount(380)}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/95 border border-gray-200 shadow-md flex items-center justify-center text-gray-700 hover:text-[#b8441c] hover:scale-105 active:scale-95 transition-all"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-midnight-surface border border-white/10 shadow-xl flex items-center justify-center text-text-primary hover:text-platinum hover:bg-white/5 active:scale-95 transition-all"
           aria-label="Scroll right"
         >
           <ChevronRight className="w-5 h-5" />
@@ -110,7 +110,7 @@ export function MobbinScroller({
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className={`flex overflow-x-auto no-scrollbar py-2 px-1 cursor-grab active:cursor-grabbing select-none scroll-smooth ${gap} ${
+        className={`flex overflow-x-auto no-scrollbar py-4 px-1 cursor-grab active:cursor-grabbing select-none scroll-smooth ${gap} ${
           fadeEdges ? "mask-fade-edges" : ""
         }`}
       >

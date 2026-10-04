@@ -20,153 +20,137 @@ export function PlotCard({ plot, layout = "grid" }: PlotCardProps) {
 
   return (
     <div
-      className={`group bg-white rounded-[14px] border border-[#f0f0f2] overflow-hidden shadow-[0_4px_20px_-2px_rgba(18,20,23,0.05)] hover:shadow-[0_12px_30px_-4px_rgba(18,20,23,0.1)] transition-all duration-300 flex ${
-        isHorizontal ? "flex-col sm:flex-row" : "flex-col justify-between"
+      className={`group double-bezel p-1.5 rounded-[1.75rem] transition-all duration-500 hover:border-platinum/50 flex ${
+        isHorizontal ? "flex-col sm:flex-row" : "flex-col"
       }`}
     >
-      {/* Top / Left Image Container */}
-      <div
-        className={`relative overflow-hidden bg-gray-100 ${
-          isHorizontal
-            ? "sm:w-80 sm:shrink-0 aspect-[16/10] sm:aspect-auto sm:min-h-[220px]"
-            : "aspect-[16/10]"
-        }`}
-      >
-        <Image
-          src={plot.images.hero}
-          alt={plot.title}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+      <div className={`relative bg-midnight-card rounded-[calc(1.75rem-0.375rem)] overflow-hidden flex ${
+        isHorizontal ? "flex-col sm:flex-row w-full" : "flex-col w-full h-full"
+      }`}>
+        
+        {/* Top / Left Image Container */}
+        <div
+          className={`relative overflow-hidden bg-midnight ${
+            isHorizontal
+              ? "sm:w-80 sm:shrink-0 aspect-[16/10] sm:aspect-auto sm:min-h-[260px]"
+              : "aspect-[16/10]"
+          }`}
+        >
+          <Image
+            src={plot.images.hero}
+            alt={plot.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-midnight/90 via-midnight/20 to-transparent" />
 
-        {/* Top Badges */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {plot.dldApproved && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#fffbeb] text-[#b45309] border border-[#fde68a] shadow-xs">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#f59e0b]" />
-                DLD Verified
+          {/* Top Badges */}
+          <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {plot.dldApproved && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-platinum/90 text-midnight shadow-platinum-subtle backdrop-blur-md">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  DLD Verified
+                </span>
+              )}
+              <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-midnight/60 text-text-primary border border-white/10 backdrop-blur-md">
+                {plot.ownership}
               </span>
-            )}
-            <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-white/90 backdrop-blur-xs text-gray-800 border border-gray-200/60 shadow-xs">
-              {plot.ownership}
-            </span>
-          </div>
-
-          {plot.dataStatus === "verified" ? (
-            <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-[#121417]/80 text-[#f59e0b] border border-amber-500/30 backdrop-blur-xs">
-              Exclusive
-            </span>
-          ) : (
-            <span className="px-2 py-0.5 rounded text-[10px] font-medium tracking-wider uppercase bg-black/60 text-gray-300 backdrop-blur-xs">
-              Portfolio
-            </span>
-          )}
-        </div>
-
-        {/* Bottom Image Overlay: Location & Tags */}
-        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
-          <div className="flex items-center gap-1 font-medium drop-shadow-sm">
-            <MapPin className="w-3.5 h-3.5 text-[#f59e0b]" />
-            <span>{plot.location.community}</span>
-            {plot.location.sector && <span className="opacity-80">• {plot.location.sector}</span>}
-          </div>
-          {plot.waterfront && (
-            <span className="bg-sky-950/80 text-sky-200 border border-sky-400/30 text-[10px] px-2 py-0.5 rounded font-medium">
-              Waterfront
-            </span>
-          )}
-          {plot.cornerPlot && (
-            <span className="bg-emerald-950/80 text-emerald-200 border border-emerald-400/30 text-[10px] px-2 py-0.5 rounded font-medium">
-              Corner Parcel
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Content Area */}
-      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-        <div>
-          <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5 font-medium">
-            <span className="text-[#b8441c] font-semibold">{plot.category}</span>
-            <span className="font-mono text-[11px]">{plot.heightAllowance}</span>
-          </div>
-
-          <Link href={`/plots/${plot.slug}`} className="block group/title">
-            <h3 className="font-semibold text-gray-900 text-base leading-snug group-hover/title:text-[#b8441c] transition-colors line-clamp-2">
-              {plot.title}
-            </h3>
-          </Link>
-
-          {isHorizontal && (
-            <p className="text-xs text-gray-500 mt-2 line-clamp-2 font-light leading-relaxed">
-              {plot.description}
-            </p>
-          )}
-        </div>
-
-        {/* Price Box */}
-        <div className="bg-[#fafbfc] rounded-lg p-3 border border-gray-100 flex items-baseline justify-between">
-          <div>
-            <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Total Land Price</div>
-            <div className="text-xl font-bold text-[#121417] tabular-nums tracking-tight">
-              AED {formatAED(plot.priceAED)}
             </div>
           </div>
-          {plot.pricePerSqFtGFA && (
-            <div className="text-right">
-              <div className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Rate / GFA</div>
-              <div className="text-xs font-semibold text-gray-700 tabular-nums">
-                AED {plot.pricePerSqFtGFA} <span className="text-[10px] text-gray-500">/sq.ft</span>
+
+          {/* Bottom Image Overlay: Location & Tags */}
+          <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-text-primary text-xs">
+            <div className="flex items-center gap-1 font-medium drop-shadow-md">
+              <MapPin className="w-3.5 h-3.5 text-platinum" />
+              <span>{plot.location.community}</span>
+              {plot.location.sector && <span className="text-text-secondary">• {plot.location.sector}</span>}
+            </div>
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className="p-6 flex-1 flex flex-col justify-between space-y-5">
+          <div>
+            <div className="flex items-center justify-between text-[11px] text-text-secondary mb-2 font-medium tracking-wide uppercase">
+              <span className="text-platinum">{plot.category}</span>
+              <span className="font-mono">{plot.heightAllowance}</span>
+            </div>
+
+            <Link href={`/plots/${plot.slug}`} className="block group/title">
+              <h3 className="font-serif-heading font-medium text-text-primary text-xl leading-tight group-hover/title:text-platinum transition-colors line-clamp-2">
+                {plot.title}
+              </h3>
+            </Link>
+
+            {isHorizontal && (
+              <p className="text-sm text-text-secondary mt-3 line-clamp-2 font-light leading-relaxed">
+                {plot.description}
+              </p>
+            )}
+          </div>
+
+          {/* Price Box */}
+          <div className="bg-white/5 rounded-xl p-4 border border-white/5 flex items-baseline justify-between">
+            <div>
+              <div className="text-[10px] uppercase tracking-wider text-text-secondary font-medium">Total Land Price</div>
+              <div className="text-xl font-medium text-text-primary tabular-nums tracking-tight mt-0.5">
+                AED {formatAED(plot.priceAED)}
               </div>
             </div>
-          )}
-        </div>
-
-        {/* 3-Column Specifications Grid */}
-        <div className="grid grid-cols-3 gap-2 py-1 text-center border-y border-gray-100">
-          <div className="p-1">
-            <span className="block text-[10px] uppercase tracking-wider text-gray-400 font-medium">Plot Area</span>
-            <span className="font-bold text-xs text-gray-800 tabular-nums">
-              {plot.plotAreaSqFt.toLocaleString()} <span className="text-[9px] font-normal text-gray-500">sq.ft</span>
-            </span>
+            {plot.pricePerSqFtGFA && (
+              <div className="text-right">
+                <div className="text-[10px] uppercase tracking-wider text-text-secondary font-medium">Rate / GFA</div>
+                <div className="text-sm font-medium text-text-primary tabular-nums mt-0.5">
+                  AED {plot.pricePerSqFtGFA} <span className="text-[10px] text-text-secondary font-normal">/sq.ft</span>
+                </div>
+              </div>
+            )}
           </div>
-          <div className="p-1 border-x border-gray-100">
-            <span className="block text-[10px] uppercase tracking-wider text-gray-400 font-medium">Max GFA</span>
-            <span className="font-bold text-xs text-gray-800 tabular-nums">
-              {plot.maxGfaSqFt.toLocaleString()} <span className="text-[9px] font-normal text-gray-500">sq.ft</span>
-            </span>
-          </div>
-          <div className="p-1">
-            <span className="block text-[10px] uppercase tracking-wider text-gray-400 font-medium">FAR</span>
-            <span className="font-bold text-xs text-[#b8441c] tabular-nums">
-              {plot.far.toFixed(2)}x
-            </span>
-          </div>
-        </div>
 
-        {/* Action Strip */}
-        <div className="pt-2 flex items-center gap-2">
-          <Link
-            href={`/plots/${plot.slug}`}
-            className="flex-1 py-2 px-3 rounded-md bg-[#121417] hover:bg-[#b8441c] text-white text-xs font-semibold text-center transition-colors flex items-center justify-center gap-1"
-          >
-            <span>Plot Dossier</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
+          {/* 3-Column Specifications Grid */}
+          <div className="grid grid-cols-3 gap-3 py-3 border-y border-white/5">
+            <div>
+              <span className="block text-[9px] uppercase tracking-wider text-text-secondary font-medium mb-1">Plot Area</span>
+              <span className="font-medium text-xs text-text-primary tabular-nums">
+                {plot.plotAreaSqFt.toLocaleString()} <span className="text-[9px] text-text-secondary">sq.ft</span>
+              </span>
+            </div>
+            <div className="border-l border-white/5 pl-3">
+              <span className="block text-[9px] uppercase tracking-wider text-text-secondary font-medium mb-1">Max GFA</span>
+              <span className="font-medium text-xs text-text-primary tabular-nums">
+                {plot.maxGfaSqFt.toLocaleString()} <span className="text-[9px] text-text-secondary">sq.ft</span>
+              </span>
+            </div>
+            <div className="border-l border-white/5 pl-3">
+              <span className="block text-[9px] uppercase tracking-wider text-text-secondary font-medium mb-1">FAR</span>
+              <span className="font-medium text-xs text-platinum tabular-nums">
+                {plot.far.toFixed(2)}x
+              </span>
+            </div>
+          </div>
 
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="py-2 px-3 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition-colors flex items-center gap-1.5"
-            title="Direct WhatsApp with PALC Land Intelligence Desk"
-          >
-            <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
-            <span className="hidden sm:inline">WhatsApp</span>
-          </a>
+          {/* Action Strip */}
+          <div className="pt-1 flex items-center gap-3">
+            <Link
+              href={`/plots/${plot.slug}`}
+              className="group/btn flex-1 py-3 px-4 rounded-xl bg-white/5 hover:bg-platinum text-text-primary hover:text-midnight text-xs font-semibold text-center transition-all flex items-center justify-center gap-2"
+            >
+              <span>Plot Dossier</span>
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+            </Link>
+
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-3 px-4 rounded-xl bg-emerald-950/30 hover:bg-emerald-900/50 text-emerald-400 border border-emerald-500/20 text-xs font-semibold transition-all flex items-center gap-2"
+              title="Direct WhatsApp with PALC Land Intelligence Desk"
+            >
+              <MessageSquare className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
